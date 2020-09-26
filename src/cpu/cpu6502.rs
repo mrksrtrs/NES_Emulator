@@ -22,6 +22,11 @@ pub fn new(bus: Bus) -> Cpu6502 {
     }
 }
 
+pub fn clock_cycle() {}
+pub fn reset() {}
+pub fn irq() {}
+pub fn nmi() {}
+
 pub enum StatusRegisterFlags {
     // Carry, 1 = True
     C = 1 << 0,
@@ -39,39 +44,4 @@ pub enum StatusRegisterFlags {
     V = 1 << 6,
     // Negative, 1 = Negative
     N = 1 << 7
-}
-
-// Addressing modes
-pub enum AddressingMode {
-    Accumulator,
-    Absolute,
-    AbsoluteX,
-    AbsoluteY,
-    Immidiate,
-    Implied,
-    Indirect,
-    XIndirect,
-    IndirectY,
-    Relative,
-    ZeroPage,
-    ZeroPageX,
-    ZeroPageY
-}
-
-// OP Codes
-pub enum Instruction {
-    ADD, AND, ASL,
-    BCC, BCS, BEQ, BIT, BMI, BNE, BPL, BRK, BVC, BVS,
-    CLC, CLD, CLI, CLV, CMP, CPX, CPY,
-    DEC, DEX, DEY,
-    EOR,
-    INC, INX, INY,
-    JMP, JSR,
-    LDA, LDX, LDY, LSR,
-    NOP,
-    ORA,
-    PHA, PHP, PLA, PLP,
-    ROL, ROR, RTI, RTS,
-    SBC, SEC, SED, SEI, STA, STX, STY,
-    TAX, TAY, TSX, TXA, TXS, TYA 
 }
