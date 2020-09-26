@@ -1,9 +1,10 @@
-# NES Emualtor
+# NES Emulator
 
 ## Setup
 
-This project is developed with the Rust version 1.46.0 (04488afe3 2020-08-24).
+This project is developed with the [Rust Version 1.46.0](https://github.com/rust-lang/rust/releases/tag/1.46.0).
 
+To run the project use the Rust package manager [Cargo](https://github.com/rust-lang/cargo).
 ```
 cargo run
 ```
