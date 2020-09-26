@@ -1,3 +1,9 @@
+mod cpu6502;
+
 fn main() {
-    println!("Hello, world!");
+    
+    let cpu = cpu6502::new();
+
+    println!("Content of x_reg {}", cpu.reg_x);
+
 }
