@@ -50,8 +50,6 @@ lazy_static! {
     pub static ref INSTRUCTION_OP_CODE_MATRIX: HashMap<u8, OpCode> = {
         let mut map = HashMap::new();
         
-        let nop: OpCode = OpCode { instruction: Instruction::NOP, addr_mode: AddressingMode::Implied, clock_cycles: 0x02 };
-    
         // Row: 0x00 - 0x0f
         map.insert(0x00, OpCode { instruction: Instruction::BRK, addr_mode: AddressingMode::Implied, clock_cycles: 0x07 });
         map.insert(0x01, OpCode { instruction: Instruction::ORA, addr_mode: AddressingMode::XIndirect, clock_cycles: 0x06 });
@@ -212,8 +210,32 @@ lazy_static! {
         map.insert(0xdd, OpCode { instruction: Instruction::CMP, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x04 });
         map.insert(0xde, OpCode { instruction: Instruction::DEC, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x07 });
 
+        // Row: 0xe0 - 0xef
+        map.insert(0xe0, OpCode { instruction: Instruction::CPX, addr_mode: AddressingMode::Immidiate, clock_cycles: 0x02 });
+        map.insert(0xe1, OpCode { instruction: Instruction::SBC, addr_mode: AddressingMode::XIndirect, clock_cycles: 0x06 });
+        map.insert(0xe4, OpCode { instruction: Instruction::CPX, addr_mode: AddressingMode::ZeroPage, clock_cycles: 0x03 });
+        map.insert(0xe5, OpCode { instruction: Instruction::SBC, addr_mode: AddressingMode::ZeroPage, clock_cycles: 0x03 });
+        map.insert(0xe6, OpCode { instruction: Instruction::INC, addr_mode: AddressingMode::ZeroPage, clock_cycles: 0x05 });
+        map.insert(0xe8, OpCode { instruction: Instruction::INX, addr_mode: AddressingMode::Implied, clock_cycles: 0x02 });
+        map.insert(0xe9, OpCode { instruction: Instruction::SBC, addr_mode: AddressingMode::Immidiate, clock_cycles: 0x02 });
+        map.insert(0xea, OpCode { instruction: Instruction::NOP, addr_mode: AddressingMode::Implied, clock_cycles: 0x02 });
+        map.insert(0xec, OpCode { instruction: Instruction::CPX, addr_mode: AddressingMode::Absolute, clock_cycles: 0x04 });
+        map.insert(0xed, OpCode { instruction: Instruction::SBC, addr_mode: AddressingMode::Absolute, clock_cycles: 0x04 });
+        map.insert(0xee, OpCode { instruction: Instruction::INC, addr_mode: AddressingMode::Absolute, clock_cycles: 0x06 });
+
+        // Row: 0xf0 - 0xff
+        map.insert(0xf0, OpCode { instruction: Instruction::BEQ, addr_mode: AddressingMode::Relative, clock_cycles: 0x02 });
+        map.insert(0xf1, OpCode { instruction: Instruction::SBC, addr_mode: AddressingMode::IndirectY, clock_cycles: 0x05 });
+        map.insert(0xf5, OpCode { instruction: Instruction::SBC, addr_mode: AddressingMode::ZeroPageX, clock_cycles: 0x04 });
+        map.insert(0xf6, OpCode { instruction: Instruction::INC, addr_mode: AddressingMode::ZeroPageX, clock_cycles: 0x06 });
+        map.insert(0xf8, OpCode { instruction: Instruction::SED, addr_mode: AddressingMode::Implied, clock_cycles: 0x02 });
+        map.insert(0xf9, OpCode { instruction: Instruction::SBC, addr_mode: AddressingMode::AbsoluteY, clock_cycles: 0x04 });
+        map.insert(0xfd, OpCode { instruction: Instruction::SBC, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x04 });
+        map.insert(0xfe, OpCode { instruction: Instruction::INC, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x07 });
+
         // Fill map with NOP where its undefined in range 0x00 - 0xff
-        for i in 0x00..0xff{
+        let nop: OpCode = OpCode { instruction: Instruction::NOP, addr_mode: AddressingMode::Implied, clock_cycles: 0x02 };
+        for i in 0x00..=0xff {
             if ! map.contains_key(&i) {
                 map.insert(i, nop);
             }
