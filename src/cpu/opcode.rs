@@ -73,6 +73,19 @@ lazy_static! {
         map.insert(0x1d, OpCode { instruction: Instruction::ORA, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x04 });
         map.insert(0x1e, OpCode { instruction: Instruction::ASL, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x07 });
     
+        // Third row: 0x20 - 0x2f
+        map.insert(0x20, OpCode { instruction: Instruction::JSR, addr_mode: AddressingMode::Absolute, clock_cycles: 0x06 });
+        map.insert(0x21, OpCode { instruction: Instruction::AND, addr_mode: AddressingMode::XIndirect, clock_cycles: 0x06 });
+        map.insert(0x24, OpCode { instruction: Instruction::BIT, addr_mode: AddressingMode::ZeroPage, clock_cycles: 0x03 });
+        map.insert(0x25, OpCode { instruction: Instruction::AND, addr_mode: AddressingMode::ZeroPage, clock_cycles: 0x03 });
+        map.insert(0x26, OpCode { instruction: Instruction::ROL, addr_mode: AddressingMode::ZeroPage, clock_cycles: 0x05 });
+        map.insert(0x28, OpCode { instruction: Instruction::PLP, addr_mode: AddressingMode::Implied, clock_cycles: 0x04 });
+        map.insert(0x29, OpCode { instruction: Instruction::AND, addr_mode: AddressingMode::Immidiate, clock_cycles: 0x02 });
+        map.insert(0x2a, OpCode { instruction: Instruction::ROL, addr_mode: AddressingMode::Accumulator, clock_cycles: 0x02 });
+        map.insert(0x2c, OpCode { instruction: Instruction::BIT, addr_mode: AddressingMode::Absolute, clock_cycles: 0x04 });
+        map.insert(0x2d, OpCode { instruction: Instruction::AND, addr_mode: AddressingMode::Absolute, clock_cycles: 0x04 });
+        map.insert(0x2e, OpCode { instruction: Instruction::ROL, addr_mode: AddressingMode::Absolute, clock_cycles: 0x06 });
+
         // Fill map with NOP where its undefined in range 0x00 - 0xff
         for i in 0x00..0xff{
             if ! map.contains_key(&i) {
