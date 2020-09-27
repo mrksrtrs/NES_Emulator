@@ -29,7 +29,7 @@ pub enum AddressingMode {
 // OP Codes
 #[derive(Debug, Copy, Clone)]
 pub enum Instruction {
-    ADD, AND, ASL,
+    ADC, ADD, AND, ASL,
     BCC, BCS, BEQ, BIT, BMI, BNE, BPL, BRK, BVC, BVS,
     CLC, CLD, CLI, CLV, CMP, CPX, CPY,
     DEC, DEX, DEY,
@@ -52,7 +52,7 @@ lazy_static! {
         
         let nop: OpCode = OpCode { instruction: Instruction::NOP, addr_mode: AddressingMode::Implied, clock_cycles: 0x02 };
     
-        // First row: 0x00 - 0x0f
+        // Row: 0x00 - 0x0f
         map.insert(0x00, OpCode { instruction: Instruction::BRK, addr_mode: AddressingMode::Implied, clock_cycles: 0x07 });
         map.insert(0x01, OpCode { instruction: Instruction::ORA, addr_mode: AddressingMode::XIndirect, clock_cycles: 0x06 });
         map.insert(0x05, OpCode { instruction: Instruction::ORA, addr_mode: AddressingMode::ZeroPage, clock_cycles: 0x03 });
@@ -63,7 +63,7 @@ lazy_static! {
         map.insert(0x0d, OpCode { instruction: Instruction::ORA, addr_mode: AddressingMode::Absolute, clock_cycles: 0x04 });
         map.insert(0x0e, OpCode { instruction: Instruction::ASL, addr_mode: AddressingMode::Absolute, clock_cycles: 0x06 });
     
-        // Second row: 0x10 - 0x1f
+        // Row: 0x10 - 0x1f
         map.insert(0x10, OpCode { instruction: Instruction::BPL, addr_mode: AddressingMode::Relative, clock_cycles: 0x02 });
         map.insert(0x11, OpCode { instruction: Instruction::ORA, addr_mode: AddressingMode::IndirectY, clock_cycles: 0x05 });
         map.insert(0x15, OpCode { instruction: Instruction::ORA, addr_mode: AddressingMode::ZeroPageX, clock_cycles: 0x04 });
@@ -73,7 +73,7 @@ lazy_static! {
         map.insert(0x1d, OpCode { instruction: Instruction::ORA, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x04 });
         map.insert(0x1e, OpCode { instruction: Instruction::ASL, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x07 });
     
-        // Third row: 0x20 - 0x2f
+        // Row: 0x20 - 0x2f
         map.insert(0x20, OpCode { instruction: Instruction::JSR, addr_mode: AddressingMode::Absolute, clock_cycles: 0x06 });
         map.insert(0x21, OpCode { instruction: Instruction::AND, addr_mode: AddressingMode::XIndirect, clock_cycles: 0x06 });
         map.insert(0x24, OpCode { instruction: Instruction::BIT, addr_mode: AddressingMode::ZeroPage, clock_cycles: 0x03 });
@@ -86,7 +86,7 @@ lazy_static! {
         map.insert(0x2d, OpCode { instruction: Instruction::AND, addr_mode: AddressingMode::Absolute, clock_cycles: 0x04 });
         map.insert(0x2e, OpCode { instruction: Instruction::ROL, addr_mode: AddressingMode::Absolute, clock_cycles: 0x06 });
 
-        // Fourth row: 0x30 - 0x3f
+        // Row: 0x30 - 0x3f
         map.insert(0x30, OpCode { instruction: Instruction::BMI, addr_mode: AddressingMode::Relative, clock_cycles: 0x02 });
         map.insert(0x31, OpCode { instruction: Instruction::AND, addr_mode: AddressingMode::IndirectY, clock_cycles: 0x05 });
         map.insert(0x35, OpCode { instruction: Instruction::AND, addr_mode: AddressingMode::ZeroPageX, clock_cycles: 0x04 });
@@ -96,7 +96,7 @@ lazy_static! {
         map.insert(0x3d, OpCode { instruction: Instruction::AND, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x04 });
         map.insert(0x3e, OpCode { instruction: Instruction::ROL, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x07 });
 
-        // Fifth row: 0x30 - 0x3f
+        // Row: 0x40 - 0x4f
         map.insert(0x40, OpCode { instruction: Instruction::RTI, addr_mode: AddressingMode::Implied, clock_cycles: 0x06 });
         map.insert(0x41, OpCode { instruction: Instruction::EOR, addr_mode: AddressingMode::XIndirect, clock_cycles: 0x06 });
         map.insert(0x45, OpCode { instruction: Instruction::EOR, addr_mode: AddressingMode::ZeroPage, clock_cycles: 0x03 });
@@ -108,7 +108,7 @@ lazy_static! {
         map.insert(0x4d, OpCode { instruction: Instruction::EOR, addr_mode: AddressingMode::Absolute, clock_cycles: 0x04 });
         map.insert(0x4e, OpCode { instruction: Instruction::LSR, addr_mode: AddressingMode::Absolute, clock_cycles: 0x06 });
 
-        // Fourth row: 0x30 - 0x3f
+        // Row: 0x50 - 0x5f
         map.insert(0x50, OpCode { instruction: Instruction::BVC, addr_mode: AddressingMode::Relative, clock_cycles: 0x02 });
         map.insert(0x51, OpCode { instruction: Instruction::EOR, addr_mode: AddressingMode::IndirectY, clock_cycles: 0x05 });
         map.insert(0x55, OpCode { instruction: Instruction::EOR, addr_mode: AddressingMode::ZeroPageX, clock_cycles: 0x04 });
@@ -117,6 +117,18 @@ lazy_static! {
         map.insert(0x59, OpCode { instruction: Instruction::EOR, addr_mode: AddressingMode::AbsoluteY, clock_cycles: 0x04 });
         map.insert(0x5d, OpCode { instruction: Instruction::EOR, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x04 });
         map.insert(0x5e, OpCode { instruction: Instruction::LSR, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x07 });
+
+        // Row: 0x60 - 0x6f
+        map.insert(0x60, OpCode { instruction: Instruction::RTS, addr_mode: AddressingMode::Implied, clock_cycles: 0x06 });
+        map.insert(0x61, OpCode { instruction: Instruction::ADC, addr_mode: AddressingMode::XIndirect, clock_cycles: 0x06 });
+        map.insert(0x65, OpCode { instruction: Instruction::ADC, addr_mode: AddressingMode::ZeroPage, clock_cycles: 0x03 });
+        map.insert(0x66, OpCode { instruction: Instruction::ROR, addr_mode: AddressingMode::ZeroPage, clock_cycles: 0x05 });
+        map.insert(0x68, OpCode { instruction: Instruction::PLA, addr_mode: AddressingMode::Implied, clock_cycles: 0x04 });
+        map.insert(0x69, OpCode { instruction: Instruction::ADC, addr_mode: AddressingMode::Immidiate, clock_cycles: 0x02 });
+        map.insert(0x6a, OpCode { instruction: Instruction::ROR, addr_mode: AddressingMode::Accumulator, clock_cycles: 0x02 });
+        map.insert(0x6c, OpCode { instruction: Instruction::JMP, addr_mode: AddressingMode::Indirect, clock_cycles: 0x05 });
+        map.insert(0x6d, OpCode { instruction: Instruction::ADC, addr_mode: AddressingMode::Absolute, clock_cycles: 0x04 });
+        map.insert(0x6e, OpCode { instruction: Instruction::ROR, addr_mode: AddressingMode::Absolute, clock_cycles: 0x06 });
 
         // Fill map with NOP where its undefined in range 0x00 - 0xff
         for i in 0x00..0xff{
