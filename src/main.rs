@@ -5,8 +5,11 @@ fn main() {
     
     let bus = bus::Bus::new();
     let cpu = cpu::cpu6502::new(bus);
+
+    let op_codes = &cpu::opcode::INSTRUCTION_OP_CODE_MATRIX;
     
-    let c = 1 << 3;
-    println!("ci s {}", c);
-    
+    for (k, opc) in op_codes.iter() {
+        println!("{}: AddrMode: {:?}, Instruction: {:?}, Num of cycles: {}", k, opc.addr_mode, opc.instruction, opc.clock_cycles);
+    }
+
 }
