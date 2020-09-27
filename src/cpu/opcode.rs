@@ -151,6 +151,17 @@ lazy_static! {
         map.insert(0x8d, OpCode { instruction: Instruction::STA, addr_mode: AddressingMode::Absolute, clock_cycles: 0x04 });
         map.insert(0x8e, OpCode { instruction: Instruction::STX, addr_mode: AddressingMode::Absolute, clock_cycles: 0x04 });
 
+        // Row: 0x90 - 0x9f
+        map.insert(0x90, OpCode { instruction: Instruction::BCC, addr_mode: AddressingMode::Relative, clock_cycles: 0x02 });
+        map.insert(0x91, OpCode { instruction: Instruction::STA, addr_mode: AddressingMode::IndirectY, clock_cycles: 0x06 });
+        map.insert(0x94, OpCode { instruction: Instruction::STY, addr_mode: AddressingMode::ZeroPageX, clock_cycles: 0x04 });
+        map.insert(0x95, OpCode { instruction: Instruction::STA, addr_mode: AddressingMode::ZeroPageX, clock_cycles: 0x04 });
+        map.insert(0x96, OpCode { instruction: Instruction::STX, addr_mode: AddressingMode::ZeroPageY, clock_cycles: 0x04 });
+        map.insert(0x98, OpCode { instruction: Instruction::TYA, addr_mode: AddressingMode::Implied, clock_cycles: 0x02 });
+        map.insert(0x99, OpCode { instruction: Instruction::STA, addr_mode: AddressingMode::AbsoluteY, clock_cycles: 0x05 });
+        map.insert(0x9a, OpCode { instruction: Instruction::TXS, addr_mode: AddressingMode::Implied, clock_cycles: 0x02 });
+        map.insert(0x9d, OpCode { instruction: Instruction::STA, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x05 });
+
         // Fill map with NOP where its undefined in range 0x00 - 0xff
         for i in 0x00..0xff{
             if ! map.contains_key(&i) {
