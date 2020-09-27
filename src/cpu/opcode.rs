@@ -176,6 +176,19 @@ lazy_static! {
         map.insert(0xad, OpCode { instruction: Instruction::LDA, addr_mode: AddressingMode::Absolute, clock_cycles: 0x04 });
         map.insert(0xae, OpCode { instruction: Instruction::LDX, addr_mode: AddressingMode::Absolute, clock_cycles: 0x04 });
 
+        // Row: 0xb0 - 0xbf
+        map.insert(0xb0, OpCode { instruction: Instruction::BCS, addr_mode: AddressingMode::Relative, clock_cycles: 0x02 });
+        map.insert(0xb1, OpCode { instruction: Instruction::LDA, addr_mode: AddressingMode::IndirectY, clock_cycles: 0x05 });
+        map.insert(0xb4, OpCode { instruction: Instruction::LDY, addr_mode: AddressingMode::ZeroPageX, clock_cycles: 0x04 });
+        map.insert(0xb5, OpCode { instruction: Instruction::LDA, addr_mode: AddressingMode::ZeroPageX, clock_cycles: 0x04 });
+        map.insert(0xb6, OpCode { instruction: Instruction::LDX, addr_mode: AddressingMode::ZeroPageX, clock_cycles: 0x04 });
+        map.insert(0xb8, OpCode { instruction: Instruction::CLV, addr_mode: AddressingMode::Implied, clock_cycles: 0x02 });
+        map.insert(0xb9, OpCode { instruction: Instruction::LDA, addr_mode: AddressingMode::AbsoluteY, clock_cycles: 0x04 });
+        map.insert(0xba, OpCode { instruction: Instruction::TSX, addr_mode: AddressingMode::Implied, clock_cycles: 0x02 });
+        map.insert(0xbc, OpCode { instruction: Instruction::LDY, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x04 });
+        map.insert(0xbd, OpCode { instruction: Instruction::LDA, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x04 });
+        map.insert(0xbe, OpCode { instruction: Instruction::LDX, addr_mode: AddressingMode::AbsoluteX, clock_cycles: 0x04 });
+
         // Fill map with NOP where its undefined in range 0x00 - 0xff
         for i in 0x00..0xff{
             if ! map.contains_key(&i) {
