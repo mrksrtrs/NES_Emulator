@@ -31,7 +31,7 @@ impl Cpu6502 {
 
         if self.cycles == 0 {
 
-            // Read op code from bus as current program counter address
+            // Read op code from bus at current program counter address
             let op_code = self.bus.read(self.registers.pcl);
             
             // Increase program counter
